@@ -204,7 +204,7 @@
                             <ImageView
                                 android:layout_width="90dp"
                                 android:layout_height="90dp"
-                                android:src="@drawable/weed2"
+                                android:src="@drawable/weed1"
                                 />
 
                             <TextView
