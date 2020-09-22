@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimary">#2d7feb</color>
+    <color name="colorPrimaryDark">#2d7feb</color>
     <color name="colorAccent">#03DAC5</color>
+
+
+    <color name="appcolor">#2d7feb</color>
+    <color name="layout_border">#90c46e</color>
+    <color name="layout_back">#E2F0D9</color>
+    <color name="green">#008000</color>
+
+    <color name="white">#ffffff</color>
+    <color name="grey_light">#e6e6e6</color>
+    <color name="grey">#cccccc</color>
+    <color name="grey_dark">#b3b3b3</color>
+    <color name="grey_dark_pro">#8c8c8c</color>
+
+    <color name="black">#000000</color>
+
+    <color name="green_dark">#008000</color>
+    <color name="green_light">#00e600</color>
+
+    <color name="lime">#cddc39</color>
+
+    <color name="blue_dark">#0000ff</color>
+    <color name="blue_light">#4d4dff</color>
+    <color name="indigo">#3f51b5</color>
+    <color name="blue_grey">#607d8b</color>
+
+    <color name="teal">#009688</color>
+
+    <color name="red">#ff0000</color>
+
+    <color name="yelow">#ffff00</color>
+
+    <color name="orange">#ffa500</color>
+
+    <color name="brown">#795548</color>
+
+    <color name="aqua">#00ffff</color>
+
+    <color name="purple_dark">#800080</color>
+    <color name="purple_light">#e600e6</color>
+    <color name="purple_deep">#673ab7</color>
+
+    <color name="pink">#e91e63</color>
 </resources>
