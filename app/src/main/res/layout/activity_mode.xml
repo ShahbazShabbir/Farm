@@ -151,21 +151,6 @@
             android:gravity="center"
             android:layout_height="wrap_content">
 
-            <com.skydoves.elasticviews.ElasticCardView
-                android:layout_width="150dp"
-                android:layout_margin="10dp"
-                android:id="@+id/weed"
-                android:background="@color/white"
-                android:layout_height="150dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="5dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:layout_height="wrap_content">
 
                     <com.ngallazzi.highlightingview.HighlightingView
                         android:id="@+id/everywhere"
@@ -185,9 +170,7 @@
                         android:layout_centerHorizontal="true"
                         />
 
-                </LinearLayout>
 
-            </com.skydoves.elasticviews.ElasticCardView>
 
         </LinearLayout>
 
