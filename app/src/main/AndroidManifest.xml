@@ -9,7 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeScreen"></activity>
+        <activity android:name=".Activities.ContactUs"></activity>
+        <activity android:name=".Activities.Map" />
+        <activity android:name=".Activities.AboutUS" />
+        <activity android:name=".Activities.Level" />
+        <activity android:name=".Activities.Weed" />
+        <activity android:name=".Activities.Crop" />
+        <activity android:name=".Activities.Mode" />
+        <activity android:name=".Activities.Live" />
+        <activity android:name=".HomeScreen" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
