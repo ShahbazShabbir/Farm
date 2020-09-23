@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ab.farm">
 
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/icon"
@@ -9,7 +15,6 @@
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.Notification"></activity>
         <activity android:name=".Activities.ContactUs" />
         <activity android:name=".Activities.Map" />
         <activity android:name=".Activities.AboutUS" />
@@ -19,6 +24,7 @@
         <activity android:name=".Activities.Mode" />
         <activity android:name=".Activities.Live" />
         <activity android:name=".HomeScreen" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +32,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDJ_dM6eN5EJU6FKMfOfiKzClEsNfa2fMs" />
+
+<!--        AIzaSyC9bRCU6cuu-XWUkbTheC0135crVvc7Oj0-->
+        <!-- new  AIzaSyDJ_dM6eN5EJU6FKMfOfiKzClEsNfa2fMs -->
+
+
     </application>
+
+
 
 </manifest>
