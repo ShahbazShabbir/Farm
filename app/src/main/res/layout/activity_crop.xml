@@ -83,12 +83,14 @@
 
 
     <RelativeLayout
+        android:id="@+id/bottombar"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
         android:layout_height="wrap_content">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -148,11 +150,20 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_above="@id/bottombar"
         android:layout_width="match_parent"
         android:layout_below="@+id/topbar"
         android:layout_height="wrap_content">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recycler"
+            />
+
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -276,6 +287,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

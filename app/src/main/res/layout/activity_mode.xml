@@ -87,6 +87,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ABC"
@@ -116,7 +117,7 @@
                 <com.skydoves.elasticviews.ElasticCardView
                     android:layout_width="150dp"
                     android:layout_margin="10dp"
-                    android:id="@+id/live"
+                    android:id="@+id/detection"
                     android:background="@color/white"
                     android:layout_height="150dp"
                     app:cardCornerRadius="20dp"
@@ -174,7 +175,7 @@
                 <com.skydoves.elasticviews.ElasticCardView
                     android:layout_width="150dp"
                     android:layout_margin="10dp"
-                    android:id="@+id/crop"
+                    android:id="@+id/everywhere"
                     android:background="@color/white"
                     android:layout_height="150dp"
                     app:cardCornerRadius="20dp"

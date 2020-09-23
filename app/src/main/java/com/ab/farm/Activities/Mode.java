@@ -2,17 +2,45 @@ package com.ab.farm.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ab.farm.Constant;
 import com.ab.farm.R;
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.skydoves.elasticviews.ElasticCardView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Mode extends AppCompatActivity {
 
     ImageView back,contactus,notification;
-
+    TextView textView;
+    ElasticCardView Detection,Everywher;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +53,46 @@ public class Mode extends AppCompatActivity {
                 finish();
             }
         });
+
+        Detection = findViewById(R.id.detection);
+        Everywher = findViewById(R.id.everywhere);
+        textView = findViewById(R.id.textview);
+
+        sharedPreferences=getSharedPreferences("Mode",MODE_PRIVATE);
+
+        String current_mode = sharedPreferences.getString("mode",null);
+
+        if (current_mode == null){
+            textView.setText("Mode is Unselected");
+        }
+        else if (current_mode.equals("detection")){
+            textView.setText("Mode is Detective");
+            Detection.setCardBackgroundColor(getResources().getColor(R.color.green_light));
+        }
+        else if (current_mode.equals("everywhere")){
+            textView.setText("Mode is Everywhere");
+            Everywher.setCardBackgroundColor(getResources().getColor(R.color.green_light));
+        }
+        else {
+            textView.setText("Mode is Unselected");
+        }
+
+        Detection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                getApi("1");
+
+            }
+        });
+        Everywher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                getApi2("0");
+            }
+        });
+
 
         contactus = findViewById(R.id.contactus);
         contactus.setOnClickListener(new View.OnClickListener() {
@@ -43,5 +111,121 @@ public class Mode extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void getApi2(final String s) {
+        final android.app.AlertDialog loading = new ProgressDialog(Mode.this);
+        loading.setMessage("Loading...");
+        loading.show();
+
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,
+                Constant.Base_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    if (response.equals("1")) {
+                        Toast.makeText(Mode.this, "Mode is changed", Toast.LENGTH_SHORT).show();
+                        Everywher.setCardBackgroundColor(getResources().getColor(R.color.green_light));
+                        Detection.setCardBackgroundColor(getResources().getColor(R.color.white));
+                        textView.setText("Mode is Everwhere");
+
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("mode","everywhere");
+                        editor.apply();
+                        loading.dismiss();
+
+                    }
+                    else {
+                        loading.dismiss();
+                        Toast.makeText(Mode.this, "Mode is not changed", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    loading.dismiss();
+                    Toast.makeText(Mode.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Mode.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+                loading.dismiss();
+            }
+        }){
+
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> map = new HashMap<>();
+                map.put("action","changeMode");
+                map.put("mode",s);
+                return map;
+            }
+        };
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void getApi(final String mody) {
+
+        final android.app.AlertDialog loading = new ProgressDialog(Mode.this);
+        loading.setMessage("Loading...");
+        loading.show();
+
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,
+                Constant.Base_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    if (response.equals("1")) {
+                        Toast.makeText(Mode.this, "Mode is changed", Toast.LENGTH_SHORT).show();
+                        Detection.setCardBackgroundColor(getResources().getColor(R.color.green_light));
+                        Everywher.setCardBackgroundColor(getResources().getColor(R.color.white));
+
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("mode","detection");
+                        editor.apply();
+                        textView.setText("Mode is Detective");
+                        loading.dismiss();
+                    }
+                    else {
+                        loading.dismiss();
+                        Toast.makeText(Mode.this, "Mode is not changed", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    loading.dismiss();
+                    Toast.makeText(Mode.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Mode.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+                loading.dismiss();
+            }
+        }){
+
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> map = new HashMap<>();
+                map.put("action","changeMode");
+                map.put("mode",mody);
+                return map;
+            }
+        };
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        requestQueue.add(stringRequest);
+
     }
 }
