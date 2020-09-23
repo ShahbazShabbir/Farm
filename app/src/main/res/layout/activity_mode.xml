@@ -90,7 +90,7 @@
             android:id="@+id/textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ABC"
+            android:text="Unselected"
             android:textColor="@color/white"
             android:textSize="18dp"
             android:textStyle="bold"

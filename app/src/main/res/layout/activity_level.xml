@@ -107,7 +107,7 @@
                     android:layout_margin="10dp"
                     android:id="@+id/crop"
                     android:background="@color/white"
-                    android:layout_height="150dp"
+                    android:layout_height="165dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="5dp">
 
@@ -133,6 +133,17 @@
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:layout_marginTop="10dp"
+                            />
+                        <TextView
+                            android:id="@+id/pestidide_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textAlignment="center"
+                            android:textSize="16dp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
                             />
 
                     </LinearLayout>
@@ -167,7 +178,7 @@
                 android:layout_margin="10dp"
                 android:id="@+id/kljl"
                 android:background="@color/white"
-                android:layout_height="150dp"
+                android:layout_height="165dp"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="5dp">
 
@@ -193,6 +204,17 @@
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:layout_marginTop="10dp"
+                        />
+                    <TextView
+                        android:id="@+id/battery_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginTop="5dp"
                         />
 
                 </LinearLayout>

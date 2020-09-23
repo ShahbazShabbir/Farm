@@ -9,10 +9,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -59,6 +61,7 @@ public class HomeScreen extends AppCompatActivity {
     String p_level;
     String is_spray;
     String Area;
+    int check = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,6 +172,130 @@ public class HomeScreen extends AppCompatActivity {
 
         getData();
 
+        Spray.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (is_spray.equals("1")){
+                    changeSpray("0");
+                }
+                else {
+                    changeSpray("1");
+                }
+            }
+        });
+
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b) {
+                        changestatus("1");
+                    } else {
+                        changestatus("0");
+                    }
+            }
+        });
+    }
+
+    private void changestatus(final String s) {
+        final android.app.AlertDialog loading = new ProgressDialog(HomeScreen.this);
+        loading.setMessage("Changing...");
+//        loading.show();
+
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,
+                Constant.Base_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    if (response.equals("1")) {
+//                        Toast.makeText(HomeScreen.this, "Status Changed", Toast.LENGTH_SHORT).show();
+                        getData();
+                        loading.dismiss();
+
+                    }
+                    else {
+                        loading.dismiss();
+//                        Toast.makeText(HomeScreen.this, "Status is not changed", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    loading.dismiss();
+                    Toast.makeText(HomeScreen.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(HomeScreen.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+                loading.dismiss();
+            }
+        }){
+
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+
+                java.util.Map<String,String> map = new HashMap<>();
+                map.put("action","changeStatus");
+                map.put("status",s);
+                return map;
+            }
+        };
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        requestQueue.add(stringRequest);
+    }
+
+    private void changeSpray(final String s) {
+        final android.app.AlertDialog loading = new ProgressDialog(HomeScreen.this);
+        loading.setMessage("Changing...");
+        loading.show();
+
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,
+                Constant.Base_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    if (response.equals("1")) {
+                        Toast.makeText(HomeScreen.this, "Spray Changed", Toast.LENGTH_SHORT).show();
+                        getData();
+                        loading.dismiss();
+
+                    }
+                    else {
+                        loading.dismiss();
+                        Toast.makeText(HomeScreen.this, "Spray is not changed", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    loading.dismiss();
+                    Toast.makeText(HomeScreen.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(HomeScreen.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+                loading.dismiss();
+            }
+        }){
+
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+
+                java.util.Map<String,String> map = new HashMap<>();
+                map.put("action","changeIsSpray");
+                map.put("is_spray",s);
+                return map;
+            }
+        };
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        requestQueue.add(stringRequest);
     }
 
     private void getData() {
@@ -204,6 +331,13 @@ public class HomeScreen extends AppCompatActivity {
                             aSwitch.setChecked(false);
                             aSwitch.setTextOff("OFF");
                         }
+                        if (is_spray.equals("1")){
+                            Spray.setBackground(getDrawable(R.drawable.rocketgreen));
+                        }
+                        else {
+                            Spray.setBackground(getDrawable(R.drawable.rocketred));
+                        }
+
 
                         loading.dismiss();
                     } catch (JSONException e) {
@@ -268,6 +402,78 @@ public class HomeScreen extends AppCompatActivity {
 
             dialog.show();
         }
+    }
+    private void getData2() {
+
+//        final android.app.AlertDialog loading = new ProgressDialog(HomeScreen.this);
+//        loading.setMessage("Loading...");
+//        loading.show();
+
+        RequestQueue requestQueue= Volley.newRequestQueue(HomeScreen.this);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, Constant.Base_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.equals("null")) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            id = jsonObject1.getString("id");
+                            Status = jsonObject1.getString("status");
+                            Mode = jsonObject1.getString("mode");
+                            Liveurl = jsonObject1.getString("live_url");
+                            b_level = jsonObject1.getString("b_level");;
+                            p_level = jsonObject1.getString("p_level");;
+                            is_spray = jsonObject1.getString("is_spray");
+                            Area = jsonObject1.getString("area");
+                        }
+
+                        if (Status.equals("1")){
+                            aSwitch.setTextOn("ON");
+                            aSwitch.setChecked(true);
+                        }
+                        else {
+                            aSwitch.setChecked(false);
+                            aSwitch.setTextOff("OFF");
+                        }
+                        if (is_spray.equals("1")){
+                            Spray.setBackground(getDrawable(R.drawable.rocketgreen));
+                        }
+                        else {
+                            Spray.setBackground(getDrawable(R.drawable.rocketred));
+                        }
+
+
+//                        loading.dismiss();
+                    } catch (JSONException e) {
+//                        loading.dismiss();
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    Toast.makeText(HomeScreen.this, "No Record Found", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }){
+
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+
+                java.util.Map<String,String> map = new HashMap<>();
+                map.put("action", "getRobot");
+                return map;
+            }
+        };
+
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        requestQueue.add(stringRequest);
     }
 
     @Override

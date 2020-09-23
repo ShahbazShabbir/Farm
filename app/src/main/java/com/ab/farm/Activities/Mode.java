@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ab.farm.Constant;
+import com.ab.farm.HomeScreen;
 import com.ab.farm.R;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -39,6 +40,7 @@ public class Mode extends AppCompatActivity {
 
     ImageView back,contactus,notification;
     TextView textView;
+    String Mode_status;
     ElasticCardView Detection,Everywher;
     SharedPreferences sharedPreferences;
     @Override
@@ -61,22 +63,23 @@ public class Mode extends AppCompatActivity {
         sharedPreferences=getSharedPreferences("Mode",MODE_PRIVATE);
 
         String current_mode = sharedPreferences.getString("mode",null);
+//
+//        if (current_mode == null){
+//            textView.setText("Mode is Unselected");
+//        }
+//        else if (current_mode.equals("detection")){
+//            textView.setText("Mode is Detective");
+//            Detection.setCardBackgroundColor(getResources().getColor(R.color.green_light));
+//        }
+//        else if (current_mode.equals("everywhere")){
+//            textView.setText("Mode is Everywhere");
+//            Everywher.setCardBackgroundColor(getResources().getColor(R.color.green_light));
+//        }
+//        else {
+//            textView.setText("Mode is Unselected");
+//        }
 
-        if (current_mode == null){
-            textView.setText("Mode is Unselected");
-        }
-        else if (current_mode.equals("detection")){
-            textView.setText("Mode is Detective");
-            Detection.setCardBackgroundColor(getResources().getColor(R.color.green_light));
-        }
-        else if (current_mode.equals("everywhere")){
-            textView.setText("Mode is Everywhere");
-            Everywher.setCardBackgroundColor(getResources().getColor(R.color.green_light));
-        }
-        else {
-            textView.setText("Mode is Unselected");
-        }
-
+        getData();
         Detection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,7 +118,7 @@ public class Mode extends AppCompatActivity {
 
     private void getApi2(final String s) {
         final android.app.AlertDialog loading = new ProgressDialog(Mode.this);
-        loading.setMessage("Loading...");
+        loading.setMessage("Changing...");
         loading.show();
 
         RequestQueue requestQueue= Volley.newRequestQueue(this);
@@ -126,13 +129,14 @@ public class Mode extends AppCompatActivity {
                 try{
                     if (response.equals("1")) {
                         Toast.makeText(Mode.this, "Mode is changed", Toast.LENGTH_SHORT).show();
-                        Everywher.setCardBackgroundColor(getResources().getColor(R.color.green_light));
-                        Detection.setCardBackgroundColor(getResources().getColor(R.color.white));
+
                         textView.setText("Mode is Everwhere");
 
-                        SharedPreferences.Editor editor=sharedPreferences.edit();
-                        editor.putString("mode","everywhere");
-                        editor.apply();
+                        getData2();
+
+//                        SharedPreferences.Editor editor=sharedPreferences.edit();
+//                        editor.putString("mode","everywhere");
+//                        editor.apply();
                         loading.dismiss();
 
                     }
@@ -174,7 +178,7 @@ public class Mode extends AppCompatActivity {
     private void getApi(final String mody) {
 
         final android.app.AlertDialog loading = new ProgressDialog(Mode.this);
-        loading.setMessage("Loading...");
+        loading.setMessage("Changing...");
         loading.show();
 
         RequestQueue requestQueue= Volley.newRequestQueue(this);
@@ -185,8 +189,10 @@ public class Mode extends AppCompatActivity {
                 try{
                     if (response.equals("1")) {
                         Toast.makeText(Mode.this, "Mode is changed", Toast.LENGTH_SHORT).show();
-                        Detection.setCardBackgroundColor(getResources().getColor(R.color.green_light));
-                        Everywher.setCardBackgroundColor(getResources().getColor(R.color.white));
+//                        Detection.setCardBackgroundColor(getResources().getColor(R.color.green_light));
+//                        Everywher.setCardBackgroundColor(getResources().getColor(R.color.white));
+
+                        getData2();
 
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         editor.putString("mode","detection");
@@ -227,5 +233,145 @@ public class Mode extends AppCompatActivity {
         stringRequest.setRetryPolicy(policy);
         requestQueue.add(stringRequest);
 
+    }
+
+
+    private void getData() {
+
+        final android.app.AlertDialog loading = new ProgressDialog(Mode.this);
+        loading.setMessage("Loading...");
+        loading.show();
+
+        RequestQueue requestQueue= Volley.newRequestQueue(Mode.this);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, Constant.Base_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.equals("null")) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+//                            id = jsonObject1.getString("id");
+//                            Status = jsonObject1.getString("status");
+                            Mode_status = jsonObject1.getString("mode");
+//                            Liveurl = jsonObject1.getString("live_url");
+//                            b_level = jsonObject1.getString("b_level");;
+//                            p_level = jsonObject1.getString("p_level");;
+//                            is_spray = jsonObject1.getString("is_spray");
+//                            Area = jsonObject1.getString("area");
+                        }
+                        if (Mode_status.equals("1")){
+                            textView.setText("Mode is Detective");
+                            Detection.setCardBackgroundColor(getResources().getColor(R.color.green_light));
+                            Everywher.setCardBackgroundColor(getResources().getColor(R.color.white));
+                        }
+                        else {
+                            textView.setText("Mode is Everywhere");
+                            Everywher.setCardBackgroundColor(getResources().getColor(R.color.green_light));
+                            Detection.setCardBackgroundColor(getResources().getColor(R.color.white));
+                        }
+
+                        loading.dismiss();
+                    } catch (JSONException e) {
+                        loading.dismiss();
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    loading.dismiss();
+                    Toast.makeText(Mode.this, "No Record Found", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                loading.dismiss();
+            }
+        }){
+
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+
+                java.util.Map<String,String> map = new HashMap<>();
+                map.put("action", "getRobot");
+                return map;
+            }
+        };
+
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        requestQueue.add(stringRequest);
+    }
+
+
+    private void getData2() {
+
+        final android.app.AlertDialog loading = new ProgressDialog(Mode.this);
+        loading.setMessage("Loading...");
+     //   loading.show();
+
+        RequestQueue requestQueue= Volley.newRequestQueue(Mode.this);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, Constant.Base_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.equals("null")) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+//                            id = jsonObject1.getString("id");
+//                            Status = jsonObject1.getString("status");
+                            Mode_status = jsonObject1.getString("mode");
+//                            Liveurl = jsonObject1.getString("live_url");
+//                            b_level = jsonObject1.getString("b_level");;
+//                            p_level = jsonObject1.getString("p_level");;
+//                            is_spray = jsonObject1.getString("is_spray");
+//                            Area = jsonObject1.getString("area");
+                        }
+                        if (Mode_status.equals("1")){
+                            textView.setText("Mode is Detective");
+                            Detection.setCardBackgroundColor(getResources().getColor(R.color.green_light));
+                            Everywher.setCardBackgroundColor(getResources().getColor(R.color.white));
+                        }
+                        else {
+                            textView.setText("Mode is Everywhere");
+                            Everywher.setCardBackgroundColor(getResources().getColor(R.color.green_light));
+                            Detection.setCardBackgroundColor(getResources().getColor(R.color.white));
+                        }
+
+                        loading.dismiss();
+                    } catch (JSONException e) {
+                        loading.dismiss();
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    loading.dismiss();
+                    Toast.makeText(Mode.this, "No Record Found", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                loading.dismiss();
+            }
+        }){
+
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+
+                java.util.Map<String,String> map = new HashMap<>();
+                map.put("action", "getRobot");
+                return map;
+            }
+        };
+
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        requestQueue.add(stringRequest);
     }
 }
