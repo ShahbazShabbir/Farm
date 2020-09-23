@@ -250,7 +250,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
                         Toast.makeText(Map.this, "Area is Changed", Toast.LENGTH_SHORT).show();
                         loading.dismiss();
                         Intent intent = new Intent(Map.this, HomeScreen.class);
-
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
 
                     }
@@ -301,7 +301,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
             float zoomLevel = (float) 16.0;
 
             Area = getIntent().getStringExtra("Area");
-            Toast.makeText(Map.this, Area, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(Map.this, Area, Toast.LENGTH_SHORT).show();
 
             if (Area.equals("abc")){
                 mMap.addMarker(new MarkerOptions()
