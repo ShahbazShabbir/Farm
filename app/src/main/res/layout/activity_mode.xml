@@ -86,13 +86,24 @@
         android:layout_below="@+id/topbar"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ABC"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_marginTop="20dp"
+            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
             android:weightSum="2"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="80dp"
             android:id="@+id/layout_one"
             >
 
@@ -141,32 +152,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="wrap_content">
-
-                <com.ngallazzi.highlightingview.HighlightingView
-                    android:id="@+id/detection"
-                    android:layout_width="121dp"
-                    android:layout_height="120dp"
-                    android:layout_margin="20dp"
-                    android:layout_marginStart="8dp"
-                    app:animationDurationInMillis="1500"
-                    app:bottomText="ON"
-                    app:bottomTextColor="@color/white"
-                    app:highlightedBackgroundColor="@color/green_light"
-                    app:highlightedBottomText="OFF"
-                    app:idleBackgroundColor="@color/red"
-                    app:idleIcon="@drawable/weed2"
-                    app:middleText="Press To"
-                    app:middleTextColor="@color/white"
-                    android:layout_centerHorizontal="true"
-                    />
-
-            </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -175,7 +160,7 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:weightSum="2"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/layout_two"
             android:layout_below="@id/layout_one"
             >
@@ -225,34 +210,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="wrap_content">
 
-
-                <com.ngallazzi.highlightingview.HighlightingView
-                    android:id="@+id/everywhere"
-                    android:layout_width="121dp"
-                    android:layout_height="120dp"
-                    android:layout_margin="20dp"
-                    android:layout_marginStart="8dp"
-                    app:animationDurationInMillis="1500"
-                    app:bottomText="ON"
-                    app:bottomTextColor="@color/white"
-                    app:highlightedBackgroundColor="@color/green_light"
-                    app:highlightedBottomText="OFF"
-                    app:idleBackgroundColor="@color/red"
-                    app:idleIcon="@drawable/weed2"
-                    app:middleText="Press To"
-                    app:middleTextColor="@color/white"
-                    android:layout_centerHorizontal="true"
-                    />
-
-
-
-            </LinearLayout>
 
         </LinearLayout>
 
