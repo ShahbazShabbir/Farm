@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ab.farm.Constant;
+import com.ab.farm.HomeScreen;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -59,7 +61,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
     Polygon polygon = null;
     ArrayList<Marker> markerList = new ArrayList();
     ArrayList<LatLng> points = new ArrayList<>();
-    ArrayList<String> pointy = new ArrayList<>();
     LatLng sydney;
     GoogleMap mMap;
     Double latitude, longitude;
@@ -74,14 +75,21 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
         Clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 mMap.clear();
                 points.clear();
                 markerList.clear();
-                polygon.remove();
+//                if (polygon.equals(null)){
+//
+//                }
+//                else {
+//                    polygon.remove();
+//                }
+
             }
         });
 
-        getData();
+        //getData();
 
         ChangeMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +104,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
                     String pepe = tempy.replaceAll("lat/lng:","");
                     String pepe2 = pepe.replaceAll("[\\p{Ps}\\p{Pe}]","");
 
-                    Toast.makeText(Map.this,pepe2,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Map.this,pepe2,Toast.LENGTH_SHORT).show();
 
                     changeArea(pepe2);
 
@@ -232,15 +240,18 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
         loading.show();
 
         RequestQueue requestQueue= Volley.newRequestQueue(this);
-        StringRequest stringRequest=new StringRequest(Request.Method.POST,
+        final StringRequest stringRequest=new StringRequest(Request.Method.POST,
                 Constant.Base_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try{
                     if (response.equals("1")) {
 
-                        Toast.makeText(Map.this, "Area is changed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Map.this, "Area is Changed", Toast.LENGTH_SHORT).show();
                         loading.dismiss();
+                        Intent intent = new Intent(Map.this, HomeScreen.class);
+
+                        startActivity(intent);
 
                     }
                     else {
@@ -267,7 +278,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
 
                 java.util.Map<String,String> map = new HashMap<>();
                 map.put("action","changeArea");
-                map.put("mode",area);
+                map.put("area",area);
                 return map;
             }
         };
@@ -284,11 +295,12 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
 
         try {
 
-            getData();
+            //getData();
 
             sydney = new LatLng(latitude, longitude);
             float zoomLevel = (float) 16.0;
 
+            Area = getIntent().getStringExtra("Area");
             Toast.makeText(Map.this, Area, Toast.LENGTH_SHORT).show();
 
             if (Area.equals("abc")){

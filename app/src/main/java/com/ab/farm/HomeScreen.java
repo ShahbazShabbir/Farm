@@ -105,6 +105,8 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
+        getData();
+
 
         live.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,6 +160,8 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeScreen.this, Map.class);
+                intent.putExtra("Area",Area);
+//                Toast.makeText(HomeScreen.this,Area,Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         });
@@ -169,8 +173,6 @@ public class HomeScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        getData();
 
         Spray.setOnClickListener(new View.OnClickListener() {
             @Override
