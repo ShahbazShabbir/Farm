@@ -12,6 +12,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.widget.Toast;
+import com.google.maps.android.SphericalUtil;
 
 import com.ab.farm.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Map extends AppCompatActivity implements OnMapReadyCallback {
     SharedPreferences sharedPreferences;
@@ -126,43 +128,21 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
                 @Override
                 public void onMapClick(LatLng latLng) {
 
-
 //                    mMap.addCircle(new CircleOptions()
 //                            .center(latLng)
-//                            .radius(150)
+//                            .radius(250)
 //                            .strokeWidth(0f)
 //                            .fillColor(0x550000FF));
-                    //addMarker(latLng);
+                    addMarker(latLng);
 
-                    mMap.addMarker(new MarkerOptions().position(latLng).draggable(true).title(latLng.toString()));
+                    //double area = SphericalUtil.computeArea(Collections.singletonList(latLng));
+
+//                    Toast.makeText(Map.this,
+//                            String.valueOf(SphericalUtil.computeArea(Collections.singletonList(latLng))),Toast.LENGTH_SHORT).show();
+//                    mMap.addMarker(new MarkerOptions().position(latLng).draggable(true).title(latLng.toString()));
 
                 }
             });
-
-//            @Override
-//            public boolean onMarkerClick(Marker marker) {
-//
-//                if(markerClicked){
-//
-//                    if(polygon != null){
-//                        polygon.remove();
-//                        polygon = null;
-//                    }
-//
-//                    polygonOptions.add(marker.getPosition());
-//                    polygonOptions.strokeColor(Color.RED);
-//                    polygonOptions.fillColor(Color.BLUE);
-//                    polygon = map.addPolygon(polygonOptions);
-//                    //Area = google.maps.geometry.spherical.computeArea(polygon.getPath().getArray());
-//                }else{
-//                    if(polygon != null){
-//                        polygon.remove();
-//                        polygon = null;
-//                    }
-//
-//                    polygonOptions = new PolygonOptions().add(marker.getPosition());
-//                    markerClicked = true;
-//                }
 
             mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
                 @Override
@@ -179,6 +159,9 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
                     points.set(position, marker.getPosition());
                     marker.setTag(marker.getPosition());
                     drawPolygon();
+                    Toast.makeText(Map.this,
+                            String.valueOf(SphericalUtil.computeArea(Collections.singletonList(latLng))),Toast.LENGTH_SHORT).show();
+
                     //if (b)
                         //setAreaLength(points);
                 }
@@ -204,6 +187,9 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
         markerList.add(marker);
         points.add(latLng);
         drawPolygon();
+        Toast.makeText(Map.this,
+                String.valueOf(SphericalUtil.computeArea(points)),Toast.LENGTH_SHORT).show();
+
     }
     private void drawPolygon() {
 

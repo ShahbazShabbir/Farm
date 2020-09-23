@@ -7,12 +7,75 @@
     tools:context=".Activities.Map"
     >
 
-    <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            >
+
+
+            <EditText
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:hint="Search For Area"
+                android:layout_toStartOf="@id/lens"
+                android:id="@+id/search_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/back_border"
+                />
+            <ImageView
+                android:layout_alignParentEnd="true"
+                android:id="@+id/lens"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/search_lens" />
+
+        </RelativeLayout>
+    </LinearLayout>
+        <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/map"
+            android:layout_below="@id/top"
+            android:layout_above="@id/linear"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Activities.Map"
         />
+    <LinearLayout
+        android:id="@+id/linear"
+        android:padding="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
 
+        <Button
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:background="@drawable/area_background"
+            android:padding="15dp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Area"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
 </RelativeLayout>
