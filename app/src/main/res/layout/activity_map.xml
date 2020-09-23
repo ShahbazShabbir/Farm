@@ -46,9 +46,19 @@
 
         </RelativeLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear Map"
+        android:layout_alignParentEnd="true"
+        android:padding="5dp"
+        android:textColor="@color/blue_light"
+        android:layout_below="@id/top"
+        />
         <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/map"
-            android:layout_below="@id/top"
+            android:layout_below="@id/clear"
             android:layout_above="@id/linear"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
@@ -66,6 +76,7 @@
 
         <Button
             android:gravity="center"
+            android:id="@+id/changeMap"
             android:layout_gravity="center"
             android:textAlignment="center"
             android:background="@drawable/area_background"
