@@ -6,83 +6,245 @@
     android:layout_height="match_parent"
     tools:context=".Activities.AboutUS">
 
-    <ImageView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/paperbg"
-        />
+        android:layout_height="600dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/paperbg">
+    </FrameLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="About Us"
-        android:gravity="center"
-        android:layout_marginTop="90dp"
-        android:textStyle="bold"
-        android:textColor="@color/blue_dark"
-        android:textSize="24dp"
-        />
+        android:layout_alignParentTop="true"
+        android:id="@+id/topbar"
+        android:background="@color/white"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Muhammad Jahanzaib Khan"
-            android:textSize="15dp"
-            android:textColor="@color/black"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:layout_marginTop="30dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Syed Saad Mansoor"
-            android:textSize="15dp"
-            android:textColor="@color/black"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:layout_marginTop="20dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aqsa Ashraf"
-            android:textSize="15dp"
-            android:textColor="@color/black"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:layout_marginTop="20dp"
-            />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="What This Robot Do?"
-            android:gravity="center"
-            android:layout_marginTop="40dp"
-            android:textStyle="bold"
-            android:textColor="@color/blue_dark"
-            android:textSize="24dp"
-            />
+            android:weightSum="3"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:text="This Robot Help you to secure your time as well your money. How it works? You just have to connect robot with this app then specific area where you want to perform your task, after that you have to select mode and start the robot."
-            android:textSize="15dp"
-            android:textColor="@color/black"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="10dp"
-            />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:layout_height="wrap_content">
 
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/menu"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ABOUT US"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingRight="10dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/notification"
+                    android:id="@+id/notification"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/topbar"
+        android:layout_height="wrap_content">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Team Members"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue_dark"
+                        android:textSize="24dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Muhammad Jahanzaib Khan"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:layout_marginTop="30dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Syed Saad Mansoor"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:layout_marginTop="20dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aqsa Ashraf"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:layout_marginTop="20dp"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="What This Robot Do?"
+                        android:gravity="center"
+                        android:layout_marginTop="40dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blue_dark"
+                        android:textSize="24dp"
+                        />
+
+                    <TextView
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:text="This Robot Help you to secure your time as well your money. How it works? You just have to connect robot with this app then specific area where you want to perform your task, after that you have to select mode and start the robot."
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:layout_marginTop="20dp"
+                        android:paddingLeft="10dp"
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:weightSum="3"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/back"
+                    android:id="@+id/back"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/rocket"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingRight="10dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/headphones"
+                    android:id="@+id/contactus"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
 
 </RelativeLayout>

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.ContactUs"></activity>
+        <activity android:name=".Activities.Notification"></activity>
+        <activity android:name=".Activities.ContactUs" />
         <activity android:name=".Activities.Map" />
         <activity android:name=".Activities.AboutUS" />
         <activity android:name=".Activities.Level" />

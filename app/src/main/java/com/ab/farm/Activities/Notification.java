@@ -9,14 +9,14 @@ import android.widget.ImageView;
 
 import com.ab.farm.R;
 
-public class Mode extends AppCompatActivity {
+public class Notification extends AppCompatActivity {
 
-    ImageView back,contactus,notification;
+    ImageView back,contactus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mode);
+        setContentView(R.layout.activity_notification);
 
         back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -30,16 +30,7 @@ public class Mode extends AppCompatActivity {
         contactus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Mode.this, ContactUs.class);
-                startActivity(intent);
-            }
-        });
-
-        notification = findViewById(R.id.notification);
-        notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Mode.this, Notification.class);
+                Intent intent = new Intent(Notification.this, ContactUs.class);
                 startActivity(intent);
             }
         });
