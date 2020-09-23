@@ -187,11 +187,23 @@ public class HomeScreen extends AppCompatActivity {
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (b) {
-                        changestatus("1");
-                    } else {
-                        changestatus("0");
+                if (Area.isEmpty()) {
+                    aSwitch.setChecked(false);
+                    if (check++ > 1){
+                        Toast.makeText(HomeScreen.this, "Please Select Area First", Toast.LENGTH_SHORT).show();
                     }
+                }
+                else {
+                    if (check++ > 1) {
+                            if (b) {
+                                changestatus("1");
+                            } else {
+                                changestatus("0");
+                            }
+                    } else {
+                        check++;
+                    }
+                }
             }
         });
     }
@@ -210,6 +222,7 @@ public class HomeScreen extends AppCompatActivity {
                     if (response.equals("1")) {
 //                        Toast.makeText(HomeScreen.this, "Status Changed", Toast.LENGTH_SHORT).show();
                         getData();
+                        makenotificationsrobot();
                         loading.dismiss();
 
                     }
@@ -261,6 +274,7 @@ public class HomeScreen extends AppCompatActivity {
                     if (response.equals("1")) {
                         Toast.makeText(HomeScreen.this, "Spray Changed", Toast.LENGTH_SHORT).show();
                         getData();
+                        makenotificationspray();
                         loading.dismiss();
 
                     }
@@ -481,4 +495,129 @@ public class HomeScreen extends AppCompatActivity {
         super.onBackPressed();
 
     }
+
+    private void makenotificationspray() {
+        final android.app.AlertDialog loading = new ProgressDialog(HomeScreen.this);
+        loading.setMessage("Changing...");
+//        loading.show();
+
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,
+                Constant.Base_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+//                    if (response!=null) {
+
+//                        Toast.makeText(Mode.this, "Mode is changed", Toast.LENGTH_SHORT).show();
+//
+//                        textView.setText("Mode is Everwhere");
+//
+//                        getData2();
+//                        makenotification();
+
+//                        SharedPreferences.Editor editor=sharedPreferences.edit();
+//                        editor.putString("mode","everywhere");
+//                        editor.apply();
+                    loading.dismiss();
+
+//                    }
+//                    else {
+//                        loading.dismiss();
+//                        //Toast.makeText(Mode.this, "Mode is not changed", Toast.LENGTH_SHORT).show();
+//                    }
+                }catch (Exception e){
+                    loading.dismiss();
+                    //Toast.makeText(Mode.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(HomeScreen.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+                loading.dismiss();
+            }
+        }){
+
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+
+                java.util.Map<String,String> map = new HashMap<>();
+                map.put("action","makeNotification");
+                map.put("title","Spray");
+                map.put("description","The Spray of Robot is changed");
+                return map;
+            }
+        };
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        requestQueue.add(stringRequest);
+
+    }
+
+
+    private void makenotificationsrobot() {
+        final android.app.AlertDialog loading = new ProgressDialog(HomeScreen.this);
+        loading.setMessage("Changing...");
+//        loading.show();
+
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,
+                Constant.Base_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+//                    if (response!=null) {
+
+//                        Toast.makeText(Mode.this, "Mode is changed", Toast.LENGTH_SHORT).show();
+//
+//                        textView.setText("Mode is Everwhere");
+//
+//                        getData2();
+//                        makenotification();
+
+//                        SharedPreferences.Editor editor=sharedPreferences.edit();
+//                        editor.putString("mode","everywhere");
+//                        editor.apply();
+                    loading.dismiss();
+
+//                    }
+//                    else {
+//                        loading.dismiss();
+//                        //Toast.makeText(Mode.this, "Mode is not changed", Toast.LENGTH_SHORT).show();
+//                    }
+                }catch (Exception e){
+                    loading.dismiss();
+                    //Toast.makeText(Mode.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(HomeScreen.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+                loading.dismiss();
+            }
+        }){
+
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+
+                java.util.Map<String,String> map = new HashMap<>();
+                map.put("action","makeNotification");
+                map.put("title","Robot");
+                map.put("description","The Power of Robot is changed");
+                return map;
+            }
+        };
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        requestQueue.add(stringRequest);
+    }
+
 }

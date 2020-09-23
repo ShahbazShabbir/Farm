@@ -133,6 +133,7 @@ public class Mode extends AppCompatActivity {
                         textView.setText("Mode is Everwhere");
 
                         getData2();
+                        makenotification();
 
 //                        SharedPreferences.Editor editor=sharedPreferences.edit();
 //                        editor.putString("mode","everywhere");
@@ -193,6 +194,7 @@ public class Mode extends AppCompatActivity {
 //                        Everywher.setCardBackgroundColor(getResources().getColor(R.color.white));
 
                         getData2();
+                        makenotification();
 
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         editor.putString("mode","detection");
@@ -225,6 +227,68 @@ public class Mode extends AppCompatActivity {
                 Map<String,String> map = new HashMap<>();
                 map.put("action","changeMode");
                 map.put("mode",mody);
+                return map;
+            }
+        };
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void makenotification() {
+        final android.app.AlertDialog loading = new ProgressDialog(Mode.this);
+        loading.setMessage("Changing...");
+//        loading.show();
+
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,
+                Constant.Base_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+//                    if (response!=null) {
+
+//                        Toast.makeText(Mode.this, "Mode is changed", Toast.LENGTH_SHORT).show();
+//
+//                        textView.setText("Mode is Everwhere");
+//
+//                        getData2();
+//                        makenotification();
+
+//                        SharedPreferences.Editor editor=sharedPreferences.edit();
+//                        editor.putString("mode","everywhere");
+//                        editor.apply();
+                        loading.dismiss();
+
+//                    }
+//                    else {
+//                        loading.dismiss();
+//                        //Toast.makeText(Mode.this, "Mode is not changed", Toast.LENGTH_SHORT).show();
+//                    }
+                }catch (Exception e){
+                    loading.dismiss();
+                    //Toast.makeText(Mode.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Mode.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+                loading.dismiss();
+            }
+        }){
+
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> map = new HashMap<>();
+                map.put("action","makeNotification");
+                map.put("title","Mode");
+                map.put("description","The Mode of Robot is changed");
                 return map;
             }
         };
@@ -304,7 +368,6 @@ public class Mode extends AppCompatActivity {
         stringRequest.setRetryPolicy(policy);
         requestQueue.add(stringRequest);
     }
-
 
     private void getData2() {
 

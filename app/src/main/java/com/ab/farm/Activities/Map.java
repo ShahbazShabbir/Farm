@@ -86,7 +86,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
 //                        }
 //                    });
 
-
             String lat = sharedPreferences.getString("lat", null);
             String longi = sharedPreferences.getString("long", null);
 
@@ -112,12 +111,26 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
 
             sydney = new LatLng(latitude, longitude);
 
+            LatLng latLng1 = new LatLng(31.589441836459876,74.40559320151806);
+            LatLng latLng2 = new LatLng(31.58847109034007,74.40435636788607);
+            LatLng latLng3 = new LatLng(31.588419111298144,74.4062178209424);
             float zoomLevel = (float) 16.0;
             mMap.addMarker(new MarkerOptions()
-                    .position(sydney)
+                    .position(latLng1)
                     .title("Your Location"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));
+            mMap.addMarker(new MarkerOptions()
+                    .position(latLng2)
+                    .title("Your Location"));
+            mMap.addMarker(new MarkerOptions()
+                    .position(latLng3)
+                    .title("Your Location"));
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng1));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng2));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng3));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng1, zoomLevel));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng2, zoomLevel));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng3, zoomLevel));
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
@@ -187,14 +200,14 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
         markerList.add(marker);
         points.add(latLng);
         drawPolygon();
+
         Toast.makeText(Map.this,
-                String.valueOf(SphericalUtil.computeArea(points)),Toast.LENGTH_SHORT).show();
+                String.valueOf(points),Toast.LENGTH_SHORT).show();
 
     }
     private void drawPolygon() {
 
         Polygon polygon = null;
-
         PolygonOptions polygonOptions = new PolygonOptions();
         polygonOptions.fillColor(Color.argb(0, 0, 0, 0));
         polygonOptions.strokeColor(Color.argb(255, 0, 0, 0));
