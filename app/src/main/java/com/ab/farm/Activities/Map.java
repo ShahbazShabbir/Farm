@@ -265,6 +265,8 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
                 try{
                     if (response.equals("1")) {
 
+                        makenotification();
+
                         Toast.makeText(Map.this, "Area is Changed", Toast.LENGTH_SHORT).show();
                         loading.dismiss();
                         Intent intent = new Intent(Map.this, HomeScreen.class);
@@ -453,4 +455,67 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
             }, 2);
         }
     }
+
+    private void makenotification() {
+        final android.app.AlertDialog loading = new ProgressDialog(Map.this);
+        loading.setMessage("Changing...");
+//        loading.show();
+
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,
+                Constant.Base_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+//                    if (response!=null) {
+
+//                        Toast.makeText(Mode.this, "Mode is changed", Toast.LENGTH_SHORT).show();
+//
+//                        textView.setText("Mode is Everwhere");
+//
+//                        getData2();
+//                        makenotification();
+
+//                        SharedPreferences.Editor editor=sharedPreferences.edit();
+//                        editor.putString("mode","everywhere");
+//                        editor.apply();
+                    loading.dismiss();
+
+//                    }
+//                    else {
+//                        loading.dismiss();
+//                        //Toast.makeText(Mode.this, "Mode is not changed", Toast.LENGTH_SHORT).show();
+//                    }
+                }catch (Exception e){
+                    loading.dismiss();
+                    //Toast.makeText(Mode.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Map.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+                loading.dismiss();
+            }
+        }){
+
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+
+                java.util.Map<String,String> map = new HashMap<>();
+                map.put("action","makeNotification");
+                map.put("title","Map");
+                map.put("description","The Map Area is changed");
+                return map;
+            }
+        };
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        requestQueue.add(stringRequest);
+
+    }
+
 }
