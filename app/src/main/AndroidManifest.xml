@@ -24,7 +24,10 @@
         <activity android:name=".Activities.Weed" />
         <activity android:name=".Activities.Crop" />
         <activity android:name=".Activities.Mode" />
-        <activity android:name=".Activities.Live" />
+        <activity android:name=".Activities.Live"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
         <activity android:name=".HomeScreen" />
 
         <activity android:name=".MainActivity">

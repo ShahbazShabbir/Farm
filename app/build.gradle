@@ -37,7 +37,6 @@ dependencies {
     implementation 'com.github.ngallazzi:HighlightingView:1.1.0'
     implementation 'com.android.volley:volley:1.1.1'
 
-
     implementation 'com.google.android.gms:play-services-gcm:17.0.0'
     //location
     implementation 'com.google.android.gms:play-services-location:17.0.0'
@@ -54,4 +53,6 @@ dependencies {
 //    implementation 'com.mcxiaoke.volley:library:1.0.19'
     //Toggle Button
     //implementation 'com.github.angads25:toggle:1.1.0'
+
+    implementation 'fm.jiecao:jiecaovideoplayer:5.7'
 }

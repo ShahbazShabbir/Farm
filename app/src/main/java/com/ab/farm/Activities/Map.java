@@ -12,9 +12,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +33,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.maps.android.SphericalUtil;
 
 import com.ab.farm.R;
@@ -47,9 +52,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 public class Map extends AppCompatActivity implements OnMapReadyCallback {
     SharedPreferences sharedPreferences;
@@ -63,14 +71,21 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
     ArrayList<LatLng> points = new ArrayList<>();
     LatLng sydney;
     GoogleMap mMap;
+    ImageView search;
+    EditText editText;
     Double latitude, longitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        search = findViewById(R.id.lens);
+        editText = findViewById(R.id.search_layout);
+
         ChangeMap = findViewById(R.id.changeMap);
         Clear = findViewById(R.id.clear);
+
+
 
         Clear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,17 +94,58 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
                 mMap.clear();
                 points.clear();
                 markerList.clear();
-//                if (polygon.equals(null)){
-//
-//                }
-//                else {
-//                    polygon.remove();
-//                }
 
             }
         });
 
         //getData();
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (editText.getText().toString().isEmpty()){
+
+                    Toast.makeText(Map.this,"Please Enter Location",Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    String adderess = editText.getText().toString();
+
+                    Geocoder geoCoder = new Geocoder(Map.this, Locale.getDefault());
+                    try
+                    {
+                        List<Address> addresses = geoCoder.getFromLocationName(adderess, 5);
+                        if (addresses.size() > 0)
+                        {
+                            Double lat = (double) (addresses.get(0).getLatitude());
+                            Double lon = (double) (addresses.get(0).getLongitude());
+
+                            final LatLng user = new LatLng(lat, lon);
+                            /*used marker for show the location */
+//                            Marker hamburg = map.addMarker(new MarkerOptions()
+//                                    .position(user)
+//                                    .title(adderess)
+//                                    .icon(BitmapDescriptorFactory
+//                                            .fromResource(R.drawable.marker)));
+//                            // Move the camera instantly to hamburg with a zoom of 15.
+
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(user));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(user, 15));
+
+                            // Zoom in, animating the camera.
+                            //mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                        }
+                    }
+                    catch (IOException e)
+                    {
+                        Toast.makeText(Map.this,"Location not Found",Toast.LENGTH_SHORT).show();
+
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
 
         ChangeMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,44 +176,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
         try {
 
             getLocation();
-
-
-//            FusedLocationProviderClient fusedLocationClient;
-//            LocationManager locationManager;
-//
-//            fusedLocationClient = LocationServices.getFusedLocationProviderClient(Map.this);
-//            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                // TODO: Consider calling
-//                //    ActivityCompat#requestPermissions
-//                // here to request the missing permissions, and then overriding
-//                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                //                                          int[] grantResults)
-//                // to handle the case where the user grants the permission. See the documentation
-//                // for ActivityCompat#requestPermissions for more details.
-//                return;
-//            }
-//            fusedLocationClient.getLastLocation()
-//                    .addOnSuccessListener(new OnSuccessListener<Location>() {
-//                        @Override
-//                        public void onSuccess(android.location.Location location) {
-//
-//                            if (location != null) {
-//
-////                                latitude = location.getLatitude();
-////                                longitude = location.getLongitude();
-//                                editor = sharedPreferences.edit();
-//                                editor.putString("lat", String.valueOf(location.getLatitude()));
-//                                editor.putString("long", String.valueOf(location.getLongitude()));
-//                                editor.apply();
-//
-//                                location.reset();
-//
-//                            } else {
-//                                Toast.makeText(Map.this, "Location not Get", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
 
             String lat = sharedPreferences.getString("lat", null);
             String longi = sharedPreferences.getString("long", null);
@@ -191,7 +209,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 //                            id = jsonObject1.getString("id");
-////                            Status = jsonObject1.getString("status");
+//                            Status = jsonObject1.getString("status");
 //                            Mode_status = jsonObject1.getString("mode");
 //                            Liveurl = jsonObject1.getString("live_url");
 //                            b_level = jsonObject1.getString("b_level");;
@@ -353,35 +371,11 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
                 @Override
                 public void onMapClick(LatLng latLng) {
 
-//                    mMap.addCircle(new CircleOptions()
-//                            .center(latLng)
-//                            .radius(250)
-//                            .strokeWidth(0f)
-//                            .fillColor(0x550000FF));
                     addMarker(latLng);
 
-                    //double area = SphericalUtil.computeArea(Collections.singletonList(latLng));
-
-//                    Toast.makeText(Map.this,
-//                            String.valueOf(SphericalUtil.computeArea(Collections.singletonList(latLng))),Toast.LENGTH_SHORT).show();
-//                    mMap.addMarker(new MarkerOptions().position(latLng).draggable(true).title(latLng.toString()));
 
                 }
             });
-
-//            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//                @Override
-//                public boolean onMarkerClick(Marker marker) {
-//                    marker.remove();
-//                    markerList.remove(marker);
-//                    points.remove(points.size()-1);
-//                    polygon.remove();
-//                    if (points.size() > 0){
-//                        drawPolygon();
-//                    }
-//                    return true;
-//                }
-//            });
 
             mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
                 @Override

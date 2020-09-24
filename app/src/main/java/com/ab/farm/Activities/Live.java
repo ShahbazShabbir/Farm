@@ -13,6 +13,8 @@ import android.widget.VideoView;
 
 import com.ab.farm.R;
 
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+
 public class Live extends AppCompatActivity {
 
     ImageView back,contactus,notification;
@@ -51,12 +53,27 @@ public class Live extends AppCompatActivity {
 
         videoView = (VideoView)findViewById(R.id.videoview);
 
-        String path1="https://youtu.be/LIid42fEr-Q";
 
-        Uri uri=Uri.parse(path1);
-        videoView.setVideoURI(uri);
-        videoView.requestFocus();
+        String path1="https://www.youtube.com/watch?v=TngjJXBsg1w";
+        String VideoURL = "https://www.androidbegin.com/tutorial/AndroidCommercial.3gp";
+
+        MediaController mediacontroller = new MediaController(
+                Live.this);
+        mediacontroller.setAnchorView(videoView);
+        // Get the URL from String VideoURL
+        Uri video = Uri.parse(VideoURL);
+        videoView.setMediaController(mediacontroller);
+        videoView.setVideoURI(video);
         videoView.start();
+
+//        Uri uri=Uri.parse(path1);
+//        videoView.setMediaController(new MediaController(this));
+//        videoView.setVideoURI(uri);
+//        videoView.requestFocus();
+//        videoView.start();
+
+//        videoView.setUp(path1
+//                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "Live Streeam");
 
 
     }
