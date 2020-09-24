@@ -32,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.skydoves.elasticviews.ElasticButton;
 
 import org.json.JSONArray;
@@ -67,6 +68,8 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.GithubViewHold
     public void onBindViewHolder(@NonNull GithubViewHolder holder, final int position) {
 
         holder.Name.setText(data.get(position).getNaem());
+
+        Glide.with(context).load(data.get(position).getImage()).into(holder.imageView);
 
         if (data.get(position).getStatus().equals("1")) {
             holder.Status.setText("ON");
