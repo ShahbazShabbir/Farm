@@ -86,12 +86,12 @@
 
     </RelativeLayout>
 
-    <VideoView
-        android:id="@+id/videoview"
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        android:id="@+id/youtube_player_view"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
-
+        android:layout_height="wrap_content"
+        app:showFullScreenButton="false" />
 
     <RelativeLayout
         android:visibility="gone"

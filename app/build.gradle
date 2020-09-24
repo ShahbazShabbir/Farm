@@ -50,9 +50,10 @@ dependencies {
 
     //volley
     implementation 'com.google.code.gson:gson:2.8.5'
-//    implementation 'com.mcxiaoke.volley:library:1.0.19'
+    //implementation 'com.mcxiaoke.volley:library:1.0.19'
     //Toggle Button
     //implementation 'com.github.angads25:toggle:1.1.0'
 
-    implementation 'fm.jiecao:jiecaovideoplayer:5.7'
+    //videostreamyoutube
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 }

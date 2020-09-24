@@ -112,6 +112,7 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeScreen.this, Live.class);
+                intent.putExtra("videosurl",Liveurl);
                 startActivity(intent);
             }
         });
