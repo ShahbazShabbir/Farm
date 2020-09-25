@@ -101,11 +101,13 @@ public class Live extends AppCompatActivity {
                             url = jsonObject1.getString("live_url");
                         }
 
+                        url = url.replaceAll("https://","");
+                        final String seperate[] = url.split("/");
 
                         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                             @Override
                             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                                String videoId = "TngjJXBsg1w";
+                                String videoId = seperate[1];
                                 youTubePlayer.loadVideo(videoId, 0);
                             }
                         });
