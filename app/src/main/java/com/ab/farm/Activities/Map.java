@@ -311,7 +311,10 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+
 
         try {
 
@@ -321,7 +324,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
             float zoomLevel = (float) 16.0;
 
             Area = getIntent().getStringExtra("Area");
-            //Toast.makeText(Map.this, Area, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(Map.this, Area, Toast.LENGTH_SHORT).show();
 
             if (Area.equals("abc")){
                 mMap.addMarker(new MarkerOptions()
@@ -333,32 +336,47 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
             else {
 
                 String[] separated = Area.split(",");
-                String lat1 = separated[0];
-                String lat2 = separated[2];
-                String lat3 = separated[4];
-                String lon1 = separated[1];
-                String lon2 = separated[3];
-                String lon3 = separated[5];
 
-                LatLng latLng1 = new LatLng(Double.parseDouble(lat1),Double.parseDouble(lon1));
-                LatLng latLng2 = new LatLng(Double.parseDouble(lat2),Double.parseDouble(lon2));
-                LatLng latLng3 = new LatLng(Double.parseDouble(lat3),Double.parseDouble(lon3));
-                mMap.addMarker(new MarkerOptions()
-                        .position(latLng1)
-                        .title("Your Area"));
-                mMap.addMarker(new MarkerOptions()
-                        .position(latLng2)
-                        .title("Your Area"));
-                mMap.addMarker(new MarkerOptions()
-                        .position(latLng3)
-                        .title("Your Area"));
+                for (int i = 0;i<separated.length;i=i+2){
+                    String latos = separated[i];
+                    String lonos = separated[i+1];
+                    LatLng latLng1 = new LatLng(Double.parseDouble(latos),Double.parseDouble(lonos));
+                    mMap.addMarker(new MarkerOptions()
+                            .position(latLng1)
+                            .title("Your Area"));
 
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng1));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng2));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng3));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng1, zoomLevel));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng2, zoomLevel));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng3, zoomLevel));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng1));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng1, zoomLevel));
+
+                }
+
+//                String lat1 = separated[0];
+//                String lat2 = separated[2];
+//                String lat3 = separated[4];
+//                String lon1 = separated[1];
+//                String lon2 = separated[3];
+//                String lon3 = separated[5];
+//
+//
+//                LatLng latLng1 = new LatLng(Double.parseDouble(lat1),Double.parseDouble(lon1));
+//                LatLng latLng2 = new LatLng(Double.parseDouble(lat2),Double.parseDouble(lon2));
+//                LatLng latLng3 = new LatLng(Double.parseDouble(lat3),Double.parseDouble(lon3));
+//                mMap.addMarker(new MarkerOptions()
+//                        .position(latLng1)
+//                        .title("Your Area"));
+//                mMap.addMarker(new MarkerOptions()
+//                        .position(latLng2)
+//                        .title("Your Area"));
+//                mMap.addMarker(new MarkerOptions()
+//                        .position(latLng3)
+//                        .title("Your Area"));
+//
+//                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng1));
+//                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng2));
+//                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng3));
+//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng1, zoomLevel));
+//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng2, zoomLevel));
+//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng3, zoomLevel));
 
 
             }
@@ -367,6 +385,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
+
             mMap.setMyLocationEnabled(true);
 
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -415,9 +434,9 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
 
     public void addMarker(LatLng latLng) {
 
-        if (points.size() == 3){
+        if (points.size() == 6){
             Toast.makeText(Map.this,
-                    "You can't add more than 3 points", Toast.LENGTH_SHORT).show();
+                    "You can't add more than 6 points", Toast.LENGTH_SHORT).show();
         }
         else {
 
