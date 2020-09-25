@@ -99,7 +99,7 @@ public class Live extends AppCompatActivity {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                             url = jsonObject1.getString("live_url");
-                            }
+                        }
 
 
                         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
