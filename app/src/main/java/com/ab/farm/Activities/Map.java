@@ -324,7 +324,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
             float zoomLevel = (float) 16.0;
 
             Area = getIntent().getStringExtra("Area");
-//            Toast.makeText(Map.this, Area, Toast.LENGTH_SHORT).show();
 
             if (Area.equals("abc")){
                 mMap.addMarker(new MarkerOptions()
