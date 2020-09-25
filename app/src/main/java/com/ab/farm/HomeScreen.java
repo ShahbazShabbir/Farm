@@ -192,20 +192,14 @@ public class HomeScreen extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (Area.isEmpty()) {
                     aSwitch.setChecked(false);
-                    if (check++ > 1){
-                        Toast.makeText(HomeScreen.this, "Please Select Area First", Toast.LENGTH_SHORT).show();
-                    }
+                        Toast.makeText(HomeScreen.this, "Please Select Area to Turn On Robot", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    if (check++ > 1) {
                             if (b) {
                                 changestatus("1");
                             } else {
                                 changestatus("0");
                             }
-                    } else {
-                        check++;
-                    }
                 }
             }
         });
@@ -224,7 +218,7 @@ public class HomeScreen extends AppCompatActivity {
                 try{
                     if (response.equals("1")) {
 //                        Toast.makeText(HomeScreen.this, "Status Changed", Toast.LENGTH_SHORT).show();
-                        getData();
+                        getData2();
                         makenotificationsrobot();
                         loading.dismiss();
 
@@ -276,7 +270,7 @@ public class HomeScreen extends AppCompatActivity {
                 try{
                     if (response.equals("1")) {
                         Toast.makeText(HomeScreen.this, "Spray Changed", Toast.LENGTH_SHORT).show();
-                        getData();
+                        getData2();
                         makenotificationspray();
                         loading.dismiss();
 
